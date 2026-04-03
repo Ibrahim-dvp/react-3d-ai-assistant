@@ -5,6 +5,8 @@ A reusable React Three Fiber component that renders an interactive 3D AI voice a
 [![npm](https://img.shields.io/npm/v/@ibrahim-org/react-3d-ai-assistant)](https://www.npmjs.com/package/@ibrahim-org/react-3d-ai-assistant)
 [![license](https://img.shields.io/npm/l/@ibrahim-org/react-3d-ai-assistant)](./LICENSE)
 
+**[🚀 Live Demo](https://react-3d-ai-assistant.vercel.app)**
+
 ---
 
 ## Installation
@@ -101,6 +103,14 @@ export default function Scene() {
 - Sine-wave bobbing animation
 - All visual computation on the GPU
 - Memoized geometries and materials — no re-instantiation on render
+
+---
+
+## Links
+
+- [Live Demo](https://react-3d-ai-assistant.vercel.app)
+- [GitHub](https://github.com/Ibrahim-dvp/react-3d-ai-assistant)
+- [npm](https://www.npmjs.com/package/@ibrahim-org/react-3d-ai-assistant)
 
 ---
 
