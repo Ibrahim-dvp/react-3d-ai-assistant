@@ -2,15 +2,15 @@
 
 A reusable React Three Fiber component that renders an interactive 3D AI voice assistant sphere — iridescent glass material, blinking eyes, fire-ember sparkles, and blink-triggered radar ripple rings.
 
-[![npm](https://img.shields.io/npm/v/@ibrahim-dvp/react-3d-ai-assistant)](https://www.npmjs.com/package/@ibrahim-dvp/react-3d-ai-assistant)
-[![license](https://img.shields.io/npm/l/@ibrahim-dvp/react-3d-ai-assistant)](./LICENSE)
+[![npm](https://img.shields.io/npm/v/@ibrahim-org/react-3d-ai-assistant)](https://www.npmjs.com/package/@ibrahim-org/react-3d-ai-assistant)
+[![license](https://img.shields.io/npm/l/@ibrahim-org/react-3d-ai-assistant)](./LICENSE)
 
 ---
 
 ## Installation
 
 ```bash
-npm install @ibrahim-dvp/react-3d-ai-assistant
+npm install @ibrahim-org/react-3d-ai-assistant
 ```
 
 ### Peer dependencies (install separately if not already present)
@@ -24,7 +24,7 @@ npm install three @react-three/fiber @react-three/drei react react-dom
 ## Usage
 
 ```jsx
-import { AIVoiceAssistant } from '@ibrahim-dvp/react-3d-ai-assistant';
+import { AIVoiceAssistant } from '@ibrahim-org/react-3d-ai-assistant';
 
 export default function App() {
   return (
@@ -74,7 +74,7 @@ The component owns its own `<Canvas>` — just give the parent a width and heigh
 
 ```jsx
 import { Canvas } from '@react-three/fiber';
-import { IridescentSphere } from '@ibrahim-dvp/react-3d-ai-assistant';
+import { IridescentSphere } from '@ibrahim-org/react-3d-ai-assistant';
 
 export default function Scene() {
   return (
