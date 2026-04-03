@@ -1,11 +1,10 @@
-# react-3d-ai-assistant
-
-A reusable React Three Fiber component that renders an interactive 3D AI voice assistant sphere — iridescent glass material, blinking eyes, fire-ember sparkles, and blink-triggered radar ripple rings.
+# react-3d-ai-assistant &nbsp;·&nbsp; [Live Demo](https://react-3d-ai-assistant.vercel.app)
 
 [![npm](https://img.shields.io/npm/v/@ibrahim-org/react-3d-ai-assistant)](https://www.npmjs.com/package/@ibrahim-org/react-3d-ai-assistant)
 [![license](https://img.shields.io/npm/l/@ibrahim-org/react-3d-ai-assistant)](./LICENSE)
+[![demo](https://img.shields.io/badge/demo-live-brightgreen)](https://react-3d-ai-assistant.vercel.app)
 
-**[🚀 Live Demo](https://react-3d-ai-assistant.vercel.app)**
+A reusable React Three Fiber component that renders an interactive 3D voice assistant sphere — iridescent glass material, blinking eyes, fire-ember sparkles, and blink-triggered radar ripple rings.
 
 ---
 
