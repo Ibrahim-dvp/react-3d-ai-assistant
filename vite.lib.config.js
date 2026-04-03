@@ -34,7 +34,8 @@ export default defineConfig({
       },
     },
     sourcemap: true,
-    // Keep the dist folder clean
     emptyOutDir: true,
+    // Do not copy public/ assets (favicon, icons) into the library dist
+    copyPublicDir: false,
   },
 });
