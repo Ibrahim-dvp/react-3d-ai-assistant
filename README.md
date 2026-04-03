@@ -1,16 +1,109 @@
-# React + Vite
+# react-3d-ai-assistant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A reusable React Three Fiber component that renders an interactive 3D AI voice assistant sphere — iridescent glass material, blinking eyes, fire-ember sparkles, and blink-triggered radar ripple rings.
 
-Currently, two official plugins are available:
+[![npm](https://img.shields.io/npm/v/@ibrahim-dvp/react-3d-ai-assistant)](https://www.npmjs.com/package/@ibrahim-dvp/react-3d-ai-assistant)
+[![license](https://img.shields.io/npm/l/@ibrahim-dvp/react-3d-ai-assistant)](./LICENSE)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install @ibrahim-dvp/react-3d-ai-assistant
+```
 
-## Expanding the ESLint configuration
+### Peer dependencies (install separately if not already present)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install three @react-three/fiber @react-three/drei react react-dom
+```
+
+---
+
+## Usage
+
+```jsx
+import { AIVoiceAssistant } from '@ibrahim-dvp/react-3d-ai-assistant';
+
+export default function App() {
+  return (
+    <div style={{ width: '100vw', height: '100vh' }}>
+      <AIVoiceAssistant />
+    </div>
+  );
+}
+```
+
+The component owns its own `<Canvas>` — just give the parent a width and height.
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `scale` | `number` | `1` | Scale multiplier for the sphere |
+| `colorPalette` | `string[]` | see below | Array of **4 hex colors** seeding the shader palette |
+| `animationSpeed` | `number` | `1` | Multiplier for all animations (noise, bobbing, ripples) |
+| `enableMouseTracking` | `boolean` | `true` | Sphere rotates to follow the cursor |
+| `style` | `CSSProperties` | `{}` | CSS overrides on the container `<div>` |
+| `className` | `string` | — | Class applied to the container `<div>` |
+
+### Default color palette
+
+```js
+['#00e5ff', '#ff00ff', '#ff2200', '#4400aa']
+// Cyan, Magenta, Red, Deep Purple
+```
+
+### Custom palette example
+
+```jsx
+<AIVoiceAssistant
+  scale={1.3}
+  animationSpeed={1.2}
+  colorPalette={['#00ffcc', '#ff00aa', '#ff4400', '#220066']}
+  enableMouseTracking={true}
+/>
+```
+
+---
+
+## Using only the sphere inside your own Canvas
+
+```jsx
+import { Canvas } from '@react-three/fiber';
+import { IridescentSphere } from '@ibrahim-dvp/react-3d-ai-assistant';
+
+export default function Scene() {
+  return (
+    <Canvas camera={{ position: [0, 0, 4], fov: 45 }}>
+      <ambientLight intensity={0.4} />
+      <IridescentSphere scale={1.2} animationSpeed={1} enableMouseTracking />
+    </Canvas>
+  );
+}
+```
+
+---
+
+## Features
+
+- Custom GLSL vertex + fragment shader — 3D Simplex noise, Fresnel rim glow, Blinn-Phong specular
+- 6 vivid flowing color zones (cyan, blue, purple, magenta, red, orange) that slowly morph
+- 5 floating white semi-transparent glass-reflection overlay layers
+- Pill-shaped blinking eyes with natural random timing and double-blink
+- Fire-ember sparkle particles that spawn on the sphere surface and fall with gravity
+- Blink-triggered radar ripple rings
+- Dark transparent outer shell
+- Smooth mouse-tracking rotation with lerp
+- Sine-wave bobbing animation
+- All visual computation on the GPU
+- Memoized geometries and materials — no re-instantiation on render
+
+---
+
+## License
+
+MIT © 2026 [Ibrahim Bensaadoune](https://github.com/Ibrahim-dvp)

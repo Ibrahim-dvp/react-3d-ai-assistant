@@ -1,23 +1,68 @@
 {
-  "name": "ai-voice-assistant",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@ibrahim-dvp/react-3d-ai-assistant",
+  "version": "1.0.0",
+  "description": "A reusable React Three Fiber 3D AI voice assistant sphere with iridescent glass shader, blinking eyes, sparkle particles, and radar ripple rings.",
+  "author": "Ibrahim Bensaadoune <bensaadouneibrahim@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/Ibrahim-dvp/react-3d-ai-assistant#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ibrahim-dvp/react-3d-ai-assistant.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ibrahim-dvp/react-3d-ai-assistant/issues"
+  },
+  "keywords": [
+    "react",
+    "three.js",
+    "react-three-fiber",
+    "3d",
+    "ai",
+    "voice-assistant",
+    "webgl",
+    "glsl",
+    "shader",
+    "animation"
+  ],
   "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "sideEffects": false,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:lib": "vite build --config vite.lib.config.js",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build:lib"
   },
-  "dependencies": {
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.5.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "three": "^0.183.2"
+  "peerDependencies": {
+    "@react-three/drei": ">=9.0.0",
+    "@react-three/fiber": ">=8.0.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "three": ">=0.150.0"
+  },
+  "peerDependenciesMeta": {
+    "@react-three/drei": { "optional": false },
+    "@react-three/fiber": { "optional": false },
+    "three": { "optional": false }
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
@@ -25,6 +70,10 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
-    "vite": "^8.0.1"
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "three": "^0.183.2",
+    "vite": "^8.0.1",
+    "vite-plugin-dts": "^4.5.4"
   }
 }
