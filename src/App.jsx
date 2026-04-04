@@ -6,7 +6,7 @@ export default function App() {
       scale={1.2}
       animationSpeed={1}
       enableMouseTracking={true}
-      style={{ width: '100vw', height: '100vh' }}
+      style={{ width: '100vw', height: '100dvh' }}
     />
   );
 }

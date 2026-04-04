@@ -29,14 +29,22 @@ import { AIVoiceAssistant } from '@ibrahim-org/react-3d-ai-assistant';
 
 export default function App() {
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div
+      style={{
+        width: 'min(100%, 960px)',
+        height: 'min(78dvh, 760px)',
+        minHeight: 320,
+        margin: '0 auto',
+      }}
+    >
       <AIVoiceAssistant />
     </div>
   );
 }
 ```
 
-The component owns its own `<Canvas>` — just give the parent a width and height.
+The component owns its own `<Canvas>` and adapts to its parent container size.
+Use any responsive CSS strategy for the parent (grid, flex, aspect-ratio, clamp, media queries).
 
 ---
 
