@@ -19,6 +19,7 @@ export default function IridescentSphere({
   colorPalette = DEFAULT_COLORS,
   animationSpeed = 1,
   enableMouseTracking = true,
+  onFirstHit,
 }) {
   const meshRef = useRef();
   const groupRef = useRef();
@@ -35,22 +36,24 @@ export default function IridescentSphere({
   // Hit state for click reaction
   const [isHit, setIsHit] = useState(false);
   const hitTimeoutRef = useRef(null);
+  const hasHitRef = useRef(false);
 
   const handlePointerDown = useCallback(() => {
-    // Trigger hit animation
     setIsHit(true);
-    
-    // Clear any existing timeout to prevent overlaps
+
+    if (!hasHitRef.current && onFirstHit) {
+      hasHitRef.current = true;
+      onFirstHit();
+    }
+
     if (hitTimeoutRef.current) {
       clearTimeout(hitTimeoutRef.current);
     }
-    
-    // Reset hit state after animation completes (400ms)
     hitTimeoutRef.current = setTimeout(() => {
       setIsHit(false);
       hitTimeoutRef.current = null;
     }, 400);
-  }, []);
+  }, [onFirstHit]);
 
   const colors = useMemo(
     () => ({
@@ -153,6 +156,7 @@ export default function IridescentSphere({
       if (hitTimeoutRef.current) {
         clearTimeout(hitTimeoutRef.current);
       }
+      document.body.style.cursor = '';
     };
   }, []);
 
@@ -162,11 +166,13 @@ export default function IridescentSphere({
       <mesh geometry={outerGeo} material={outerMaterial} renderOrder={0} />
 
       {/* Main iridescent sphere - click target */}
-      <mesh 
-        ref={meshRef} 
-        geometry={sphereGeo} 
+      <mesh
+        ref={meshRef}
+        geometry={sphereGeo}
         renderOrder={1}
         onPointerDown={handlePointerDown}
+        onPointerOver={() => { document.body.style.cursor = 'pointer'; }}
+        onPointerOut={() => { document.body.style.cursor = ''; }}
       >
         <shaderMaterial
           vertexShader={vertexShader}

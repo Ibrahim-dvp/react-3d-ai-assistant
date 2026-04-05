@@ -28,6 +28,7 @@ function ResponsiveScene({
   colorPalette,
   animationSpeed,
   enableMouseTracking,
+  onFirstHit,
 }) {
   const effectiveScale = scale * profile.scaleMultiplier;
 
@@ -44,6 +45,7 @@ function ResponsiveScene({
         colorPalette={colorPalette}
         animationSpeed={animationSpeed}
         enableMouseTracking={enableMouseTracking}
+        onFirstHit={onFirstHit}
       />
     </>
   );
@@ -54,6 +56,7 @@ export default function AIVoiceAssistant({
   colorPalette,
   animationSpeed = 1,
   enableMouseTracking = true,
+  onFirstHit,
   style,
   className,
 }) {
@@ -121,6 +124,7 @@ export default function AIVoiceAssistant({
           colorPalette={colorPalette}
           animationSpeed={animationSpeed}
           enableMouseTracking={enableMouseTracking}
+          onFirstHit={onFirstHit}
         />
       </Canvas>
     </div>
