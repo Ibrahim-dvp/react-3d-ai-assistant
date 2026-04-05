@@ -1,9 +1,10 @@
-import { useRef, useMemo, useState, useCallback } from 'react';
+import { useRef, useMemo, useState, useCallback, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { vertexShader, fragmentShader } from './shaders';
 import Eyes from './Eyes';
 import RippleRings from './RippleRings';
+import ImpactFlash from './ImpactFlash';
 
 // Palette passed as uniforms (used as fallback seeds, actual colors are in shader)
 const DEFAULT_COLORS = ['#00e5ff', '#ff00ff', '#ff2200', '#4400aa'];
@@ -23,9 +24,32 @@ export default function IridescentSphere({
   const groupRef = useRef();
   const rotTarget = useRef({ x: 0, y: 0 });
 
+  const recoilRef = useRef({ active: false, timer: 0, duration: 0.35 });
+  const prevHitRef = useRef(false);
+
   const [blinkCount, setBlinkCount] = useState(0);
   const handleBlink = useCallback(() => {
     setBlinkCount((c) => c + 1);
+  }, []);
+
+  // Hit state for click reaction
+  const [isHit, setIsHit] = useState(false);
+  const hitTimeoutRef = useRef(null);
+
+  const handlePointerDown = useCallback(() => {
+    // Trigger hit animation
+    setIsHit(true);
+    
+    // Clear any existing timeout to prevent overlaps
+    if (hitTimeoutRef.current) {
+      clearTimeout(hitTimeoutRef.current);
+    }
+    
+    // Reset hit state after animation completes (400ms)
+    hitTimeoutRef.current = setTimeout(() => {
+      setIsHit(false);
+      hitTimeoutRef.current = null;
+    }, 400);
   }, []);
 
   const colors = useMemo(
@@ -66,7 +90,7 @@ export default function IridescentSphere({
     []
   );
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const elapsed = state.clock.elapsedTime;
 
     if (meshRef.current) {
@@ -79,6 +103,32 @@ export default function IridescentSphere({
     }
 
     if (!groupRef.current) return;
+
+    // Detect hit rising edge
+    if (isHit && !prevHitRef.current) {
+      recoilRef.current.active = true;
+      recoilRef.current.timer = 0;
+    }
+    prevHitRef.current = isHit;
+
+    // Sphere recoil z-offset
+    if (recoilRef.current.active && groupRef.current) {
+      recoilRef.current.timer += delta;
+      const rt = recoilRef.current.timer / recoilRef.current.duration;
+
+      if (rt >= 1.0) {
+        recoilRef.current.active = false;
+        groupRef.current.position.z = 0;
+      } else if (rt < 0.14) {
+        // Push back: 0 → -0.05 over first 14%
+        groupRef.current.position.z = (rt / 0.14) * -0.05;
+      } else {
+        // Elastic return
+        const p = (rt - 0.14) / 0.86;
+        const elastic = 1 - Math.pow(2, -10 * p) * Math.cos((p * 10 - 0.75) * ((2 * Math.PI) / 3));
+        groupRef.current.position.z = -0.05 + 0.05 * elastic;
+      }
+    }
 
     groupRef.current.position.y = Math.sin(elapsed * animationSpeed * 0.6) * 0.12;
 
@@ -97,13 +147,27 @@ export default function IridescentSphere({
       (rotTarget.current.y - groupRef.current.rotation.y) * lerpFactor;
   });
 
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hitTimeoutRef.current) {
+        clearTimeout(hitTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <group ref={groupRef} scale={scale}>
       {/* Dark transparent outer shell (sparkles sit between this and inner sphere) */}
       <mesh geometry={outerGeo} material={outerMaterial} renderOrder={0} />
 
-      {/* Main iridescent sphere */}
-      <mesh ref={meshRef} geometry={sphereGeo} renderOrder={1}>
+      {/* Main iridescent sphere - click target */}
+      <mesh 
+        ref={meshRef} 
+        geometry={sphereGeo} 
+        renderOrder={1}
+        onPointerDown={handlePointerDown}
+      >
         <shaderMaterial
           vertexShader={vertexShader}
           fragmentShader={fragmentShader}
@@ -114,8 +178,11 @@ export default function IridescentSphere({
         />
       </mesh>
 
+      {/* Hit flash effect */}
+      <ImpactFlash isActive={isHit} />
+
       {/* Eyes rendered on top */}
-      <Eyes onBlink={handleBlink} />
+      <Eyes onBlink={handleBlink} isHit={isHit} />
 
       {/* Radar ripple rings triggered by blinks */}
       <RippleRings blinkTrigger={blinkCount} />
