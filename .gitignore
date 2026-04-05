@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 dist/
 *.local
+vue-3d-ai-assistant/

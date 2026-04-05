@@ -13,7 +13,6 @@ import * as THREE from 'three';
  */
 export default function ImpactFlash({ isActive = false }) {
   const meshRef = useRef();
-  const materialRef = useRef();
 
   const flashState = useRef({
     active: false,
@@ -51,9 +50,7 @@ export default function ImpactFlash({ isActive = false }) {
   useFrame((_, delta) => {
     const fs = flashState.current;
     const mesh = meshRef.current;
-    const mat = materialRef.current;
-
-    if (!mesh || !mat) return;
+    if (!mesh) return;
 
     // Detect flash trigger (rising edge)
     if (isActive && !prevActive.current) {
@@ -66,30 +63,18 @@ export default function ImpactFlash({ isActive = false }) {
     // Update flash timer if active
     if (fs.active) {
       fs.timer += delta;
-      
       const t = fs.timer / fs.duration;
-      
+      const fadeInEnd = 0.15;
+
       if (t >= 1.0) {
-        // Flash complete
         fs.active = false;
         fs.timer = 0;
-        mat.opacity = 0;
+        mesh.material.opacity = 0;
         mesh.visible = false;
+      } else if (t < fadeInEnd) {
+        mesh.material.opacity = (t / fadeInEnd) * 0.4;
       } else {
-        // Calculate opacity based on phase
-        // 0-15% (0-30ms): Fade in
-        // 15-100% (30-200ms): Fade out
-        const fadeInEnd = 0.15;
-        
-        if (t < fadeInEnd) {
-          // Fast fade in
-          const p = t / fadeInEnd;
-          mat.opacity = p * 0.4; // Max opacity 0.4
-        } else {
-          // Gradual fade out
-          const p = (t - fadeInEnd) / (1.0 - fadeInEnd);
-          mat.opacity = 0.4 * (1.0 - p);
-        }
+        mesh.material.opacity = 0.4 * (1.0 - (t - fadeInEnd) / (1.0 - fadeInEnd));
       }
     }
   });

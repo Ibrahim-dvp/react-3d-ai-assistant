@@ -4,7 +4,6 @@ import * as THREE from 'three';
 import { vertexShader, fragmentShader } from './shaders';
 import Eyes from './Eyes';
 import RippleRings from './RippleRings';
-import ImpactFlash from './ImpactFlash';
 
 // Palette passed as uniforms (used as fallback seeds, actual colors are in shader)
 const DEFAULT_COLORS = ['#00e5ff', '#ff00ff', '#ff2200', '#4400aa'];
@@ -183,9 +182,6 @@ export default function IridescentSphere({
           side={THREE.FrontSide}
         />
       </mesh>
-
-      {/* Hit flash effect */}
-      <ImpactFlash isActive={isHit} />
 
       {/* Eyes rendered on top */}
       <Eyes onBlink={handleBlink} isHit={isHit} />

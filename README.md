@@ -56,6 +56,7 @@ Use any responsive CSS strategy for the parent (grid, flex, aspect-ratio, clamp,
 | `colorPalette` | `string[]` | see below | Array of **4 hex colors** seeding the shader palette |
 | `animationSpeed` | `number` | `1` | Multiplier for all animations (noise, bobbing, ripples) |
 | `enableMouseTracking` | `boolean` | `true` | Sphere rotates to follow the cursor |
+| `onFirstHit` | `() => void` | `undefined` | Callback fired once on the first click/hit |
 | `style` | `CSSProperties` | `{}` | CSS overrides on the container `<div>` |
 | `className` | `string` | — | Class applied to the container `<div>` |
 
@@ -110,6 +111,8 @@ export default function Scene() {
 - Sine-wave bobbing animation
 - All visual computation on the GPU
 - Memoized geometries and materials — no re-instantiation on render
+- Click/tap hit reaction — eyes squeeze to an angry "><" expression with squash-stretch animation, sphere recoils, white flash overlay
+- Pointer cursor on hover
 
 ---
 

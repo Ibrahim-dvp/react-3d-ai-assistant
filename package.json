@@ -1,6 +1,6 @@
 {
   "name": "@ibrahim-org/react-3d-ai-assistant",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A reusable React Three Fiber 3D AI voice assistant sphere with iridescent glass shader, blinking eyes, sparkle particles, and radar ripple rings.",
   "author": "Ibrahim Bensaadoune <bensaadouneibrahim@gmail.com>",
   "license": "MIT",
@@ -55,9 +55,15 @@
     "three": ">=0.150.0"
   },
   "peerDependenciesMeta": {
-    "@react-three/drei": { "optional": false },
-    "@react-three/fiber": { "optional": false },
-    "three": { "optional": false }
+    "@react-three/drei": {
+      "optional": false
+    },
+    "@react-three/fiber": {
+      "optional": false
+    },
+    "three": {
+      "optional": false
+    }
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
